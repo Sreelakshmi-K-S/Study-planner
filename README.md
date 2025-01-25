@@ -1,1 +1,1 @@
-# First-aid-guide
+# Study-planner
