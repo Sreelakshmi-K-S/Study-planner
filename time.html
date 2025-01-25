@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timetable - Fun Study Planner</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    #app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      color: var(--primary-color);
+    }
+
+    .header .quote {
+      font-size: 1.2em;
+      color: var(--accent-color);
+      margin-top: 10px;
+    }
+
+    .timetable {
+      background-color: var(--card-background);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .timetable:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .schedule {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .schedule-item {
+      background-color: #fffaf0;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      position: relative;
+    }
+
+    .schedule-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .schedule-item h3 {
+      font-size: 1.5em;
+      color: var(--secondary-color);
+      margin-bottom: 10px;
+    }
+
+    .schedule-item p {
+      margin: 0;
+      font-size: 1.1em;
+      color: var(--text-color);
+    }
+
+    .schedule-item .remove-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color var(--transition-speed);
+    }
+
+    .schedule-item .remove-btn:hover {
+      background-color: var(--primary-color);
+    }
+
+    .add-subject {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .add-subject button {
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .add-subject button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: var(--card-background);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      z-index: 1000;
+      width: 300px;
+      text-align: center;
+    }
+
+    .modal.active {
+      display: block;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      font-size: 1em;
+    }
+
+    .modal button {
+      padding: 10px 20px;
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    .modal button:hover {
+      background-color: var(--accent-color);
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .back-button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1>Timetable</h1>
+      <p class="quote">"Plan your work and work your plan!"</p>
+    </header>
+
+    <main class="timetable">
+      <h2>Your Daily Schedule</h2>
+      <div class="schedule" id="schedule-container">
+        <div class="schedule-item">
+          <button class="remove-btn">&times;</button>
+          <h3>9:00 AM - Math Class</h3>
+          <p>Learn fractions and geometry</p>
+        </div>
+        <div class="schedule-item">
+          <button class="remove-btn">&times;</button>
+          <h3>10:30 AM - Science Class</h3>
+          <p>Explore the solar system</p>
+        </div>
+        <div class="schedule-item">
+          <button class="remove-btn">&times;</button>
+          <h3>12:00 PM - History Class</h3>
+          <p>Discover ancient civilizations</p>
+        </div>
+        <div class="schedule-item">
+          <button class="remove-btn">&times;</button>
+          <h3>2:00 PM - Art Class</h3>
+          <p>Painting with watercolors</p>
+        </div>
+      </div>
+
+      <div class="add-subject">
+        <button id="add-subject-btn">Add Subject</button>
+      </div>
+
+      <a href="dash3.html" class="back-button">Back to Dashboard</a>
+    </main>
+
+    <div class="modal" id="modal">
+      <h2>Add New Subject</h2>
+      <input type="text" id="subject-name" placeholder="Subject Name" required>
+      <input type="text" id="subject-time" placeholder="Time (e.g., 3:00 PM)" required>
+      <input type="text" id="subject-desc" placeholder="Description" required>
+      <button id="save-subject-btn">Save</button>
+    </div>
+    <div class="overlay" id="overlay"></div>
+  </div>
+
+  <script>
+    const addSubjectBtn = document.getElementById('add-subject-btn');
+    const modal = document.getElementById('modal');
+    const overlay = document.getElementById('overlay');
+    const saveSubjectBtn = document.getElementById('save-subject-btn');
+    const scheduleContainer = document.getElementById('schedule-container');
+
+    addSubjectBtn.addEventListener('click', () => {
+      modal.classList.add('active');
+      overlay.classList.add('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      modal.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    saveSubjectBtn.addEventListener('click', () => {
+      const subjectName = document.getElementById('subject-name').value;
+      const subjectTime = document.getElementById('subject-time').value;
+      const subjectDesc = document.getElementById('subject-desc').value;
+
+      if (subjectName && subjectTime && subjectDesc) {
+        const newSubject = document.createElement('div');
+        newSubject.classList.add('schedule-item');
+        newSubject.innerHTML = `
+          <button class="remove-btn">&times;</button>
+          <h3>${subjectTime} - ${subjectName}</h3>
+          <p>${subjectDesc}</p>
+        `;
+        scheduleContainer.appendChild(newSubject);
+        addRemoveEvent(newSubject.querySelector('.remove-btn'));
+
+        modal.classList.remove('active');
+        overlay.classList.remove('active');
+
+        document.getElementById('subject-name').value = '';
+        document.getElementById('subject-time').value = '';
+        document.getElementById('subject-desc').value = '';
+      } else {
+        alert('Please fill in all fields.');
+      }
+    });
+
+    function addRemoveEvent(button) {
+      button.addEventListener('click', () => {
+        button.parentElement.remove();
+      });
+    }
+
+    document.querySelectorAll('.remove-btn').forEach(addRemoveEvent);
+  </script>
+</body>
+</html>

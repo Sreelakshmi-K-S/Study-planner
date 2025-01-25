@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Fun Study Planner</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: var(--card-background);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      animation: bounceIn 1s ease;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .login-container h1 {
+      font-size: 2.5em;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .login-container .welcome {
+      font-size: 1.2em;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+
+    .login-container form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form-control {
+      margin-bottom: 15px;
+      width: 100%;
+    }
+
+    .form-control label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: var(--secondary-color);
+    }
+
+    .form-control input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid var(--secondary-color);
+      border-radius: var(--border-radius);
+      font-size: 1em;
+      background-color: #fffaf0;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 10px rgba(255, 140, 66, 0.5);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      color: #fff;
+      background-color: var(--primary-color);
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .btn:hover {
+      background-color: var(--accent-color);
+      transform: scale(1.1);
+    }
+
+    .additional-options {
+      margin-top: 15px;
+    }
+
+    .additional-options a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color var(--transition-speed);
+    }
+
+    .additional-options a:hover {
+      color: var(--primary-color);
+    }
+
+    .decorative-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .circle {
+      position: absolute;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    .circle.small {
+      width: 50px;
+      height: 50px;
+      top: 10%;
+      left: 20%;
+    }
+
+    .circle.medium {
+      width: 100px;
+      height: 100px;
+      top: 40%;
+      right: 15%;
+    }
+
+    .circle.large {
+      width: 150px;
+      height: 150px;
+      bottom: 10%;
+      left: 10%;
+    }
+  </style>
+</head>
+<body>
+  <div class="decorative-elements">
+    <div class="circle small"></div>
+    <div class="circle medium"></div>
+    <div class="circle large"></div>
+  </div>
+
+  <div class="login-container">
+    <h1>Welcome!</h1>
+    <p class="welcome">Let's make studying fun and exciting!</p>
+    <form action="dashboard.html" method="POST">
+      <div class="form-control">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Your cool username" required>
+      </div>
+      <div class="form-control">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Secret password" required>
+      </div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <div class="additional-options">
+      <p>Don't have an account? <a href="#">Sign Up</a></p>
+      <p><a href="#">Forgot Password?</a></p>
+    </div>
+  </div>
+</body>
+</html>

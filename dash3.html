@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Planner Dashboard</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    #app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      color: var(--primary-color);
+    }
+
+    .header .quote {
+      font-size: 1.2em;
+      color: var(--accent-color);
+      margin-top: 10px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .overview, .navigation, .customization, .upcoming-events {
+      background-color: var(--card-background);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .overview:hover, .navigation:hover, .customization:hover, .upcoming-events:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .customization {
+      text-align: center;
+    }
+
+    .customization img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 3px solid var(--secondary-color);
+    }
+
+    .customization .student-info {
+      font-size: 1.2em;
+      color: var(--text-color);
+      margin-bottom: 15px;
+    }
+
+    .customization .achievements {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .customization .badge {
+      background-color: var(--accent-color);
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      margin-bottom: 20px;
+    }
+
+    .progress-bar p {
+      margin: 0 0 10px;
+    }
+
+    .bar-container {
+      background-color: #ffe6cc;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      height: 20px;
+    }
+
+    .bar {
+      background-color: var(--secondary-color);
+      height: 100%;
+      transition: width var(--transition-speed);
+    }
+
+    .stats p {
+      margin: 5px 0;
+    }
+
+    .navigation ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .navigation li {
+      margin: 10px 0;
+    }
+
+    .nav-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color var(--transition-speed);
+    }
+
+    .nav-link:hover {
+      color: var(--accent-color);
+    }
+
+    .upcoming-events ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .upcoming-events li {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #fffaf0;
+      border-left: 5px solid var(--accent-color);
+      border-radius: var(--border-radius);
+    }
+
+    .upcoming-events li:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1>Welcome, <span id="student-name">Student</span>!</h1>
+      <p class="quote">"The future depends on what you do today."</p>
+    </header>
+
+    <main class="dashboard">
+      <section class="customization">
+        <h2>Student Profile</h2>
+        <img src="profile-placeholder.png" alt="Profile Picture">
+        <div class="student-info">
+          <p>Name: <strong>John Doe</strong></p>
+          <p>Grade: <strong>5</strong></p>
+        </div>
+        <div class="achievements">
+          <div class="badge">Star Student</div>
+          <div class="badge">Quiz Champion</div>
+          <div class="badge">Perfect Attendance</div>
+        </div>
+      </section>
+
+      <section class="overview">
+        <h2>Overview</h2>
+        <div class="progress-bar">
+          <p>Tasks Completed: <span id="tasks-completed">3</span>/5</p>
+          <div class="bar-container">
+            <div class="bar" style="width: 60%;"></div>
+          </div>
+        </div>
+        <div class="stats">
+          <p><strong>Lessons Attended:</strong> <span id="lessons-attended">10</span></p>
+          <p><strong>Quizzes Taken:</strong> <span id="quizzes-taken">5</span></p>
+        </div>
+      </section>
+
+      <nav class="navigation">
+        <h2>Navigation</h2>
+        <ul>
+          <li><a href="time.html" class="nav-link">Timetable</a></li>
+          <li><a href="todo.html" class="nav-link">To-Do List</a></li>
+          <li><a href="#" class="nav-link">Progress</a></li>
+          <li><a href="#" class="nav-link">Quizzes</a></li>
+          <li><a href="#" class="nav-link">Resources</a></li>
+          <li><a href="#" class="nav-link">Settings</a></li>
+        </ul>
+      </nav>
+
+      <section class="upcoming-events">
+        <h2>Upcoming Events</h2>
+        <ul>
+          <li>Math Test: 20th July</li>
+          <li>Science Project Due: 25th July</li>
+          <li>Parent-Teacher Meeting: 30th July</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

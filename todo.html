@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List - Fun Study Planner</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    #app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      color: var(--primary-color);
+    }
+
+    .header .quote {
+      font-size: 1.2em;
+      color: var(--accent-color);
+      margin-top: 10px;
+    }
+
+    .todo-container {
+      background-color: var(--card-background);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .todo-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .todo-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .todo-item {
+      background-color: #fffaf0;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .todo-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .todo-item.completed {
+      background-color: #e6ffe6;
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .todo-item input[type="checkbox"] {
+      margin-right: 15px;
+      transform: scale(1.5);
+    }
+
+    .todo-item .remove-btn {
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color var(--transition-speed);
+    }
+
+    .todo-item .remove-btn:hover {
+      background-color: var(--primary-color);
+    }
+
+    .add-todo {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .add-todo input {
+      width: calc(100% - 150px);
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      font-size: 1em;
+    }
+
+    .add-todo button {
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .add-todo button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .back-button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1>To-Do List</h1>
+      <p class="quote">"Tick off your tasks and achieve your goals!"</p>
+    </header>
+
+    <main class="todo-container">
+      <h2>Your Tasks</h2>
+      <ul class="todo-list" id="todo-list">
+        <li class="todo-item">
+          <div>
+            <input type="checkbox" class="todo-checkbox">
+            <span>Complete Math Homework</span>
+          </div>
+          <button class="remove-btn">&times;</button>
+        </li>
+        <li class="todo-item">
+          <div>
+            <input type="checkbox" class="todo-checkbox">
+            <span>Practice Spelling Words</span>
+          </div>
+          <button class="remove-btn">&times;</button>
+        </li>
+        <li class="todo-item">
+          <div>
+            <input type="checkbox" class="todo-checkbox">
+            <span>Finish Science Project</span>
+          </div>
+          <button class="remove-btn">&times;</button>
+        </li>
+      </ul>
+
+      <div class="add-todo">
+        <input type="text" id="new-task" placeholder="Add a new task...">
+        <button id="add-task-btn">Add Task</button>
+      </div>
+
+      <a href="dash3.html" class="back-button">Back to Dashboard</a>
+    </main>
+  </div>
+
+  <script>
+    const todoList = document.getElementById('todo-list');
+    const addTaskBtn = document.getElementById('add-task-btn');
+    const newTaskInput = document.getElementById('new-task');
+
+    // Add Task
+    addTaskBtn.addEventListener('click', () => {
+      const taskText = newTaskInput.value.trim();
+
+      if (taskText === '') {
+        alert('Please enter a task.');
+        return;
+      }
+
+      const newTask = document.createElement('li');
+      newTask.classList.add('todo-item');
+      newTask.innerHTML = `
+        <div>
+          <input type="checkbox" class="todo-checkbox">
+          <span>${taskText}</span>
+        </div>
+        <button class="remove-btn">&times;</button>
+      `;
+
+      addTaskEvents(newTask);
+      todoList.appendChild(newTask);
+      newTaskInput.value = '';
+    });
+
+    // Add Events to Task
+    function addTaskEvents(taskItem) {
+      const checkbox = taskItem.querySelector('.todo-checkbox');
+      const removeBtn = taskItem.querySelector('.remove-btn');
+
+      checkbox.addEventListener('change', () => {
+        taskItem.classList.toggle('completed');
+      });
+
+      removeBtn.addEventListener('click', () => {
+        taskItem.remove();
+      });
+    }
+
+    // Add Events to Existing Tasks
+    document.querySelectorAll('.todo-item').forEach(addTaskEvents);
+  </script>
+</body>
+</html>
