@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Science Quiz</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 20px;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      text-align: center;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: var(--card-background);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .question {
+      font-size: 1.2em;
+      margin: 20px 0;
+      color: var(--text-color);
+    }
+
+    .options {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .options li {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #fefefe;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1em;
+      cursor: pointer;
+      margin: 10px 5px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-color);
+    }
+
+    .score {
+      font-size: 1.5em;
+      color: var(--primary-color);
+      margin: 20px 0;
+    }
+
+    .review {
+      text-align: left;
+      margin-top: 20px;
+      font-size: 1em;
+    }
+
+    .review-item {
+      margin-bottom: 15px;
+    }
+
+    .correct {
+      color: var(--primary-color);
+    }
+
+    .incorrect {
+      color: var(--accent-color);
+    }
+
+    .social-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .social-buttons a {
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 1.2em;
+      color: #fff;
+      background-color: #3b5998; /* Facebook color */
+      padding: 10px;
+      border-radius: var(--border-radius);
+      transition: background-color 0.3s;
+    }
+
+    .social-buttons a:hover {
+      background-color: #2d4373; /* Facebook dark color */
+    }
+
+    .social-buttons a.twitter {
+      background-color: #55acee; /* Twitter color */
+    }
+
+    .social-buttons a.twitter:hover {
+      background-color: #1da1f2; /* Twitter hover color */
+    }
+
+    .social-buttons a.linkedin {
+      background-color: #0077b5; /* LinkedIn color */
+    }
+
+    .social-buttons a.linkedin:hover {
+      background-color: #006097; /* LinkedIn hover color */
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Social Science Quiz</h1>
+    <div id="quiz">
+      <div id="question-container">
+        <div class="question" id="question">Question text here</div>
+        <ul class="options" id="options"></ul>
+      </div>
+      <div>
+        <button class="btn" id="back-button" style="display: none;">Back</button>
+        <button class="btn" id="next-button">Next</button>
+      </div>
+    </div>
+    <div id="score-container" style="display: none;">
+      <div class="score" id="score"></div>
+      <div id="review" class="review"></div>
+      <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
+      <!-- Return to Dashboard button -->
+      <button class="btn" onclick="returnToDashboard()">Return to Dashboard</button>
+      
+    </div>
+  </div>
+
+  <script>
+    const allQuestions = [
+      { question: "Who was the first President of the United States?", options: ["George Washington", "Thomas Jefferson", "Abraham Lincoln", "John Adams"], correct: "George Washington" },
+      { question: "Which civilization built the pyramids in Egypt?", options: ["Mesopotamians", "Ancient Egyptians", "Romans", "Maya"], correct: "Ancient Egyptians" },
+      { question: "What is the capital of France?", options: ["Berlin", "Madrid", "Paris", "Rome"], correct: "Paris" },
+      { question: "What is the longest river in the world?", options: ["Amazon", "Nile", "Yangtze", "Mississippi"], correct: "Nile" },
+      { question: "Which country was the birthplace of democracy?", options: ["Italy", "Greece", "Egypt", "India"], correct: "Greece" },
+      { question: "What year did World War II end?", options: ["1943", "1945", "1950", "1960"], correct: "1945" },
+      { question: "What is the largest ocean on Earth?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correct: "Pacific" },
+      { question: "Who wrote the play 'Romeo and Juliet'?", options: ["William Shakespeare", "Charles Dickens", "Homer", "Jane Austen"], correct: "William Shakespeare" },
+      { question: "Which empire was ruled by Julius Caesar?", options: ["Roman Empire", "Mongol Empire", "Ottoman Empire", "Mayan Empire"], correct: "Roman Empire" },
+      { question: "What is the main religion in India?", options: ["Christianity", "Islam", "Hinduism", "Buddhism"], correct: "Hinduism" }
+    ];
+
+    let questions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+
+    const questionElement = document.getElementById("question");
+    const optionsElement = document.getElementById("options");
+    const nextButton = document.getElementById("next-button");
+    const backButton = document.getElementById("back-button");
+    const scoreContainer = document.getElementById("score-container");
+    const scoreElement = document.getElementById("score");
+    const reviewElement = document.getElementById("review");
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function selectRandomQuestions() {
+      questions = shuffle(allQuestions).slice(0, 5);
+    }
+
+    function showQuestion() {
+      const currentQuestion = questions[currentQuestionIndex];
+      questionElement.textContent = currentQuestion.question;
+      optionsElement.innerHTML = "";
+
+      currentQuestion.options.forEach(option => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <label>
+            <input type="radio" name="option" value="${option}">
+            ${option}
+          </label>
+        `;
+        optionsElement.appendChild(li);
+      });
+
+      backButton.style.display = currentQuestionIndex === 0 ? "none" : "inline-block";
+      nextButton.textContent = currentQuestionIndex === questions.length - 1 ? "Submit" : "Next";
+    }
+
+    function getSelectedAnswer() {
+      const selectedOption = document.querySelector('input[name="option"]:checked');
+      return selectedOption ? selectedOption.value : null;
+    }
+
+    function nextQuestion() {
+      const selectedAnswer = getSelectedAnswer();
+      if (selectedAnswer === null) {
+        alert("Please select an answer before proceeding.");
+        return;
+      }
+
+      userAnswers[currentQuestionIndex] = selectedAnswer;
+
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        showQuestion();
+      } else {
+        showScore();
+      }
+    }
+
+    function backQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion();
+      }
+    }
+
+    function showScore() {
+      document.getElementById("quiz").style.display = "none";
+      scoreContainer.style.display = "block";
+
+      let score = 0;
+      reviewElement.innerHTML = "";
+
+      questions.forEach((question, index) => {
+        const userAnswer = userAnswers[index];
+        const isCorrect = userAnswer === question.correct;
+
+        if (isCorrect) score++;
+
+        const reviewItem = document.createElement("div");
+        reviewItem.className = "review-item";
+        reviewItem.innerHTML = `
+          <p><strong>Question:</strong> ${question.question}</p>
+          <p>Your Answer: 
+            <span style="color: ${isCorrect ? 'green' : 'red'};">${userAnswer || "Not answered"}</span>
+          </p>
+          <p>Correct Answer: 
+            <span style="color: green;">${question.correct}</span>
+          </p>
+        `;
+        reviewElement.appendChild(reviewItem);
+      });
+
+      scoreElement.textContent = `Your score: ${score} out of ${questions.length}`;
+    }
+
+    function restartQuiz() {
+      currentQuestionIndex = 0;
+      userAnswers = [];
+      document.getElementById("quiz").style.display = "block";
+      scoreContainer.style.display = "none";
+      selectRandomQuestions();
+      showQuestion();
+    }
+
+    function returnToDashboard() {
+      window.location.href = "dash3.html"; // Replace with actual dashboard URL
+    }
+
+    nextButton.addEventListener("click", nextQuestion);
+    backButton.addEventListener("click", backQuestion);
+
+    selectRandomQuestions();
+    showQuestion();
+  </script>
+</body>
+</html>

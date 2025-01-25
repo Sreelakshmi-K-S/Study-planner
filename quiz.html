@@ -211,8 +211,18 @@
   <script>
     function startQuiz(category) {
       alert(`Starting the ${category} Quiz!`);
-      // Redirect to the quiz page for the selected category
-      // window.location.href = `${category.toLowerCase()}-quiz.html`;
+      if (category === 'Science') {
+      window.location.href = 'quizs.html'; /
+    }
+    if (category === 'Maths') {
+      window.location.href = 'quizm.html'; /
+    }
+    if (category === 'Social') {
+      window.location.href = 'quizss.html'; /
+    }
+    if (category === 'English') {
+      window.location.href = 'quize.html'; /
+    }
     }
   </script>
 </body>
