@@ -1,0 +1,145 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; 
+  }
+  
+  .dashboard {
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 20px; 
+    max-width: 1200px;
+    margin: 40px auto;
+  }
+  
+  .section-header {
+    font-size: 1.8em; /* Adjust font size as needed */
+    color: #333; 
+    margin-bottom: 15px;
+  }
+  
+  .progress {
+    background-color: #f0f8ff; /* Light Blue */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .progress h2 {
+    margin-top: 0;
+    color: #3498db; /* Blue */
+  }
+  
+  .progress-item {
+    margin-bottom: 15px;
+  }
+  
+  .progress-item p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .tasks-timetable {
+    background-color: #f5f5dc; /* Beige */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tasks-timetable h3 {
+    margin-top: 0;
+    color: #2ecc71; /* Green */
+  }
+  
+  .tasks {
+    margin-bottom: 40px;
+  }
+  
+  .tasks h4 {
+    margin-top: 0;
+  }
+  
+  .task-item {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .task-item h4 {
+    margin-top: 0;
+  }
+  
+  .status {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .timetable {
+    margin-bottom: 40px;
+  }
+  
+  .timetable h4 {
+    margin-top: 0;
+  }
+  
+  .timetable-item {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .timetable-item h4 {
+    margin-top: 0;
+  }
+  
+  .calendar {
+    background-color: #ffefd5; /* Light Yellow */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calendar h4 {
+    margin-top: 0;
+    color: #f39c12; /* Orange */ 
+  }
+  
+  .calendar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .calendar li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .calendar li:last-child {
+    border-bottom: none;
+  }
+  
+  /* Colors */
+  
+  .completed {
+    color: #2ecc71; /* Green */
+  }
+  
+  .pending {
+    color: #e74c3c; /* Red */
+  }
+  
+  .attended {
+    color: #2ecc71; /* Green */
+  }
+  
+  .upcoming {
+    color: #3498db; /* Blue */
+  }

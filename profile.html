@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Study Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="profile-section">
+      <h2>Student Profile</h2>
+      <div class="profile-info">
+        <img src="profile_pic.jpg" alt="Student Profile Picture">
+        <h3>John Doe</h3>
+        <p>Grade 5</p>
+        <p>Class: 5A</p> 
+      </div>
+      <div class="badges">
+        <h3>Badges</h3>
+        <div class="badge">
+          <img src="badge1.png" alt="Badge 1">
+          <p>Consistent Learner</p>
+        </div>
+        <div class="badge">
+          <img src="badge2.png" alt="Badge 2">
+          <p>Math Whiz</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="planner-section">
+      <h2>Weekly Planner</h2>
+      <div class="timetable">
+        <h3>Timetable</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Time</th>
+              <th>Subject</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Monday</td>
+              <td>9:00 AM - 10:00 AM</td>
+              <td>Math</td>
+            </tr>
+            <tr>
+              <td>Monday</td>
+              <td>10:30 AM - 11:30 AM</td>
+              <td>Science</td>
+            </tr>
+            <tr>
+              <td>Tuesday</td>
+              <td>9:00 AM - 10:00 AM</td>
+              <td>English</td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="to-do-list">
+        <h3>To-Do List</h3>
+        <ul id="todo-list">
+          <li>
+            <input type="checkbox" id="task1">
+            <label for="task1">Complete Math Homework</label>
+          </li>
+          <li>
+            <input type="checkbox" id="task2">
+            <label for="task2">Read a chapter in a book</label>
+          </li>
+          <li>
+            <input type="checkbox" id="task3">
+            <label for="task3">Practice piano for 30 minutes</label>
+          </li>
+        </ul>
+        <input type="text" id="new-task" placeholder="Add new task">
+        <button onclick="addTask()">Add Task</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="scriptp.js"></script>
+</body>
+</html>
