@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quizzes - Fun Study Planner</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #f9f9f9; /* Light grey */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #app {
+      max-width: 800px;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      color: var(--primary-color);
+    }
+
+    .header .quote {
+      font-size: 1.2em;
+      color: var(--accent-color);
+      margin-top: 10px;
+    }
+
+    .quiz-container {
+      background-color: var(--card-background);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .quiz-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .category-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .category-card {
+      background-color: var(--card-background); /* Remove gradient, now just solid background */
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      cursor: pointer;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .category-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .category-card h3 {
+      font-size: 1.5em;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .category-card p {
+      font-size: 1em;
+      color: var(--text-color);
+      margin-bottom: 20px;
+    }
+
+    .category-card .start-button {
+      padding: 12px 24px;
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category-card .start-button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 300%;
+      background-color: var(--primary-color);
+      transition: width 0.5s, height 0.5s, top 0.5s, left 0.5s;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .category-card .start-button:hover::after {
+      width: 0;
+      height: 0;
+      top: 50%;
+      left: 50%;
+    }
+
+    .category-card .start-button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .back-button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1>Quizzes</h1>
+      <p class="quote">"Test your knowledge and have fun!"</p>
+    </header>
+
+    <main class="quiz-container">
+      <h2>Choose a Category</h2>
+      <div class="category-container">
+        <div class="category-card" onclick="startQuiz('Math')">
+          <h3>Math</h3>
+          <p>Solve puzzles and tricky questions!</p>
+          <button class="start-button">Start Quiz</button>
+        </div>
+        <div class="category-card" onclick="startQuiz('Science')">
+          <h3>Science</h3>
+          <p>Explore the wonders of science!</p>
+          <button class="start-button">Start Quiz</button>
+        </div>
+        <div class="category-card" onclick="startQuiz('Social Studies')">
+          <h3>Social Studies</h3>
+          <p>Learn about the world and cultures!</p>
+          <button class="start-button">Start Quiz</button>
+        </div>
+        <div class="category-card" onclick="startQuiz('English')">
+          <h3>English</h3>
+          <p>Master your language skills!</p>
+          <button class="start-button">Start Quiz</button>
+        </div>
+      </div>
+
+      <a href="dash3.html" class="back-button">Back to Dashboard</a>
+    </main>
+  </div>
+
+  <script>
+    function startQuiz(category) {
+      alert(`Starting the ${category} Quiz!`);
+      // Redirect to the quiz page for the selected category
+      // window.location.href = `${category.toLowerCase()}-quiz.html`;
+    }
+  </script>
+</body>
+</html>

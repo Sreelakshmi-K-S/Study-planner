@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress Dashboard</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    #app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      color: var(--primary-color);
+    }
+
+    .header .quote {
+      font-size: 1.2em;
+      color: var(--accent-color);
+      margin-top: 10px;
+    }
+
+    .progress-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .progress, .time-tracker, .recommendations, .milestones {
+      background-color: var(--card-background);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .progress:hover, .time-tracker:hover, .recommendations:hover, .milestones:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .progress-bar {
+      margin-bottom: 20px;
+    }
+
+    .progress-bar p {
+      margin: 0 0 10px;
+    }
+
+    .bar-container {
+      background-color: #ffe6cc;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      height: 20px;
+    }
+
+    .bar {
+      background-color: var(--secondary-color);
+      height: 100%;
+      transition: width var(--transition-speed);
+    }
+
+    .stats p {
+      margin: 5px 0;
+    }
+
+    .milestones .badge {
+        
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin: 10px 0; /* Add margin to ensure uniform spacing between badges */
+  }
+    
+
+    .recommendations ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .recommendations li {
+      background-color: #fffaf0;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-left: 5px solid var(--accent-color);
+      border-radius: var(--border-radius);
+    }
+
+    @media (max-width: 768px) {
+      .progress-dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1>Progress Dashboard</h1>
+      <p class="quote">"Keep pushing your limits."</p>
+    </header>
+
+    <main class="progress-dashboard">
+      <section class="progress">
+        <h2>Study Progress</h2>
+        <div class="progress-bar">
+          <p>Tasks Completed: <span id="tasks-completed">4</span>/5</p>
+          <div class="bar-container">
+            <div class="bar" style="width: 80%;"></div>
+          </div>
+        </div>
+        <div class="stats">
+          <p><strong>Lessons Attended:</strong> <span id="lessons-attended">8</span>/10</p>
+          <p><strong>Quizzes Taken:</strong> <span id="quizzes-taken">4</span>/5</p>
+        </div>
+      </section>
+
+      <section class="time-tracker">
+        <h2>Time Spent on Studies</h2>
+        <div class="progress-bar">
+          <p>Study Time: <span id="study-time">12</span> hours</p>
+          <div class="bar-container">
+            <div class="bar" style="width: 60%;"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="milestones">
+        <h2>Achievements</h2>
+        <div class="badge">Task Master</div>
+        <div class="badge">Quiz Champion</div>
+        <div class="badge">Consistency Keeper</div>
+      </section>
+
+      <section class="recommendations">
+        <h2>Study Recommendations</h2>
+        <ul>
+          <li>Focus on completing the remaining task for the week to stay on track.</li>
+          <li>Take a short break after each study session to refresh your mind.</li>
+          <li>Try revising the subjects that need more attention, like Math and Science.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Example data for progress tracking
+    let tasksCompleted = 4;
+    let totalTasks = 5;
+    let studyTime = 12; // in hours
+    let lessonsAttended = 8;
+    let quizzesTaken = 4;
+
+    // Update progress bar based on task completion
+    const taskCompletionPercentage = (tasksCompleted / totalTasks) * 100;
+    document.querySelector('.bar').style.width = taskCompletionPercentage + '%';
+    document.getElementById('tasks-completed').textContent = tasksCompleted;
+
+    // Update study time progress bar
+    const studyTimePercentage = (studyTime / 20) * 100; // Assuming 20 hours goal
+    document.querySelectorAll('.bar')[1].style.width = studyTimePercentage + '%';
+    document.getElementById('study-time').textContent = studyTime;
+
+    // Set text for lessons and quizzes
+    document.getElementById('lessons-attended').textContent = lessonsAttended;
+    document.getElementById('quizzes-taken').textContent = quizzesTaken;
+  </script>
+</body>
+</html>

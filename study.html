@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Ninja Attack</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #game-container {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 3em;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      color: var(--accent-color);
+    }
+
+    #question {
+      font-size: 1.5em;
+      margin: 20px 0;
+      color: var(--text-color);
+    }
+
+    .answers {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .answer-button {
+      background-color: var(--card-background);
+      color: var(--text-color);
+      padding: 15px 25px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .answer-button:hover {
+      background-color: var(--accent-color);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .answer-button.correct {
+      background-color: green;
+      color: white;
+    }
+
+    .answer-button.wrong {
+      background-color: red;
+      color: white;
+    }
+
+    #enemy {
+      margin: 30px auto;
+      width: 150px;
+      height: 150px;
+      background-color: var(--card-background);
+      border-radius: 50%;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: var(--accent-color);
+    }
+
+    #game-over {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #game-over h2 {
+      font-size: 2em;
+      color: var(--primary-color);
+    }
+
+    .action-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .action-button {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .action-button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div class="header">
+      <h1>Math Ninja Attack</h1>
+      <p>Solve math problems to defeat the enemy ninja!</p>
+    </div>
+
+    <!-- Dynamic Ninja Circle -->
+    <div id="enemy">😐</div>
+
+    <div id="question">What is 5 x 4?</div>
+    <div class="answers">
+      <button class="answer-button" onclick="checkAnswer(15, this)">15</button>
+      <button class="answer-button" onclick="checkAnswer(20, this)">20</button>
+      <button class="answer-button" onclick="checkAnswer(25, this)">25</button>
+      <button class="answer-button" onclick="checkAnswer(10, this)">10</button>
+    </div>
+
+    <div id="result"></div>
+
+    <div id="game-over">
+      <h2>Game Over!</h2>
+      <p>Your Score: <span id="score"></span> / <span id="total"></span></p>
+      <div class="action-buttons">
+        <a href="#" class="action-button" onclick="retryGame()">Retry</a>
+        <a href="dashboard.html" class="action-button">Return to Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { question: "What is 5 x 4?", correct: 20 },
+      { question: "What is 6 x 3?", correct: 18 },
+      { question: "What is 12 ÷ 3?", correct: 4 },
+      { question: "What is 7 + 8?", correct: 15 },
+      { question: "What is 9 - 4?", correct: 5 },
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function loadNextQuestion() {
+      if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
+        document.getElementById("question").textContent = currentQuestion.question;
+
+        const answers = document.querySelectorAll(".answer-button");
+        const correctAnswer = currentQuestion.correct;
+        const options = [
+          correctAnswer,
+          correctAnswer + 2,
+          correctAnswer - 2,
+          correctAnswer + 5,
+        ].sort(() => Math.random() - 0.5);
+
+        answers.forEach((button, index) => {
+          button.textContent = options[index];
+          button.className = "answer-button";
+          button.setAttribute("onclick", `checkAnswer(${options[index]}, this)`);
+        });
+
+        document.getElementById("result").textContent = "";
+        document.getElementById("enemy").textContent = "😐"; // Reset enemy face
+      } else {
+        endGame();
+      }
+    }
+
+    function checkAnswer(answer, button) {
+      const currentQuestion = questions[currentQuestionIndex];
+      const enemy = document.getElementById("enemy");
+
+      if (answer === currentQuestion.correct) {
+        score++;
+        button.classList.add("correct");
+        document.getElementById("result").textContent = "Correct! You hit the enemy!";
+        enemy.textContent = "😃"; // Happy face for correct answer
+      } else {
+        button.classList.add("wrong");
+        document.getElementById("result").textContent = `Wrong! The correct answer was ${currentQuestion.correct}.`;
+        enemy.textContent = "😠"; // Angry face for wrong answer
+      }
+
+      currentQuestionIndex++;
+      setTimeout(loadNextQuestion, 1000);
+    }
+
+    function endGame() {
+      document.getElementById("game-over").style.display = "block";
+      document.getElementById("score").textContent = score;
+      document.getElementById("total").textContent = questions.length;
+
+      document.getElementById("question").style.display = "none";
+      document.querySelector(".answers").style.display = "none";
+      document.getElementById("enemy").style.display = "none";
+    }
+
+    function retryGame() {
+      currentQuestionIndex = 0;
+      score = 0;
+      document.getElementById("game-over").style.display = "none";
+      document.getElementById("question").style.display = "block";
+      document.querySelector(".answers").style.display = "flex";
+      document.getElementById("enemy").style.display = "block";
+      loadNextQuestion();
+    }
+
+    loadNextQuestion();
+  </script>
+</body>
+</html>

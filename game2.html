@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Search Game for Students</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #game-container {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 3em;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      color: var(--accent-color);
+    }
+
+    #timer {
+      font-size: 1.5em;
+      color: var(--primary-color);
+      margin-top: 10px;
+    }
+
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(10, 40px);
+      gap: 5px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .cell {
+      width: 40px;
+      height: 40px;
+      background-color: var(--card-background);
+      color: var(--text-color);
+      font-size: 1.2em;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .cell.highlight {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .cell.correct {
+      background-color: green;
+      color: white;
+    }
+
+    .cell.wrong {
+      background-color: red;
+      color: white;
+    }
+
+    .word-list {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .word-list h3 {
+      margin-bottom: 10px;
+    }
+
+    .word-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .word-list li {
+      font-size: 16px;
+      color: var(--text-color);
+    }
+
+    .word-list li.found {
+      color: green;
+      font-weight: bold;
+      text-decoration: line-through;
+    }
+
+    #game-over {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #game-over h2 {
+      font-size: 2em;
+      color: var(--primary-color);
+    }
+
+    .action-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .action-button {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .action-button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .action-button:active {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div class="header">
+      <h1>Word Search Game for Students</h1>
+      <p>Find the hidden words in the grid!</p>
+    </div>
+
+    <div id="timer">Time Left: <span id="time-left">60</span>s</div>
+
+    <div id="grid"></div>
+
+    <div class="word-list">
+      <h3>Words to Find:</h3>
+      <ul id="wordList"></ul>
+    </div>
+
+    <div id="game-over">
+      <h2>Game Over!</h2>
+      <p>Your Score: <span id="score"></span> / <span id="total"></span></p>
+      <div class="action-buttons">
+        <a href="#" class="action-button" onclick="retryGame()">Retry</a>
+        <a href="game.html" class="action-button">Previous</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const gridSize = 10;
+    const words = ['APPLE', 'MATH', 'STUDENT', 'BOOK', 'CLASS'];  // 5 educational words
+    const grid = [];
+    const wordListElement = document.getElementById('wordList');
+    const gridElement = document.getElementById('grid');
+    let selectedCells = [];
+    let foundWords = [];
+    let timeLeft = 60;
+    let timerInterval;
+    let timerStarted = false;
+
+    // Initialize grid with random letters
+    function initializeGrid() {
+      for (let i = 0; i < gridSize; i++) {
+        grid[i] = [];
+        for (let j = 0; j < gridSize; j++) {
+          grid[i][j] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random letter A-Z
+        }
+      }
+    }
+
+    // Place words into the grid
+    function placeWords() {
+      words.forEach(word => {
+        let placed = false;
+        while (!placed) {
+          const direction = Math.floor(Math.random() * 3); // 0 = horizontal, 1 = vertical, 2 = diagonal
+          const startX = Math.floor(Math.random() * gridSize);
+          const startY = Math.floor(Math.random() * gridSize);
+          if (canPlaceWord(word, startX, startY, direction)) {
+            placeWord(word, startX, startY, direction);
+            placed = true;
+          }
+        }
+      });
+    }
+
+    // Check if a word can be placed at a position
+    function canPlaceWord(word, x, y, direction) {
+      if (direction === 0 && x + word.length > gridSize) return false; // Horizontal
+      if (direction === 1 && y + word.length > gridSize) return false; // Vertical
+      if (direction === 2 && (x + word.length > gridSize || y + word.length > gridSize)) return false; // Diagonal
+      for (let i = 0; i < word.length; i++) {
+        const nx = x + (direction === 0 ? i : direction === 2 ? i : 0);
+        const ny = y + (direction === 1 ? i : direction === 2 ? i : 0);
+        if (grid[ny][nx] !== String.fromCharCode(65 + Math.floor(Math.random() * 26)) && grid[ny][nx] !== word[i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // Place a word in the grid
+    function placeWord(word, x, y, direction) {
+      for (let i = 0; i < word.length; i++) {
+        const nx = x + (direction === 0 ? i : direction === 2 ? i : 0);
+        const ny = y + (direction === 1 ? i : direction === 2 ? i : 0);
+        grid[ny][nx] = word[i];
+      }
+    }
+
+    // Render the grid
+    function renderGrid() {
+      gridElement.innerHTML = '';
+      grid.forEach((row, y) => {
+        row.forEach((letter, x) => {
+          const cell = document.createElement('div');
+          cell.classList.add('cell');
+          cell.textContent = letter;
+          cell.dataset.x = x;
+          cell.dataset.y = y;
+          cell.addEventListener('click', () => handleCellClick(cell));
+          gridElement.appendChild(cell);
+        });
+      });
+    }
+
+    // Render the word list
+    function renderWordList() {
+      words.forEach(word => {
+        const li = document.createElement('li');
+        li.textContent = word;
+        wordListElement.appendChild(li);
+      });
+    }
+
+    // Handle cell click
+    function handleCellClick(cell) {
+      if (!timerStarted) {
+        startTimer();
+        timerStarted = true;
+      }
+
+      const x = parseInt(cell.dataset.x);
+      const y = parseInt(cell.dataset.y);
+      if (selectedCells.some(cell => cell.x === x && cell.y === y)) return; // Prevent selecting the same cell again
+
+      selectedCells.push({ x, y });
+      cell.classList.add('highlight');
+
+      // Check if the selected word is correct
+      checkWordSelection(cell);
+    }
+
+    // Check if selected cells form a valid word
+    function checkWordSelection(cell) {
+      const selectedWord = selectedCells.map(cell => grid[cell.y][cell.x]).join('');
+      words.forEach(word => {
+        if (selectedWord === word && !foundWords.includes(word)) {
+          foundWords.push(word);
+          highlightWordInGrid(word);
+          updateWordList();
+          resetSelection();
+          incrementScore();
+        } else if (!selectedWord.includes(word)) {
+          // If incorrect, mark cells as wrong
+          markWrongSelection(cell);
+        }
+      });
+    }
+
+    // Highlight the found word in grid
+    function highlightWordInGrid(word) {
+      const wordCells = selectedCells.filter(cell => grid[cell.y][cell.x] === word);
+      wordCells.forEach(cell => {
+        const cellElement = document.querySelector(`[data-x='${cell.x}'][data-y='${cell.y}']`);
+        if (cellElement) {
+          cellElement.classList.add('correct');
+        }
+      });
+    }
+
+    // Mark incorrect selections
+    function markWrongSelection(cell) {
+      const cellElement = document.querySelector(`[data-x='${cell.x}'][data-y='${cell.y}']`);
+      if (cellElement) {
+        cellElement.classList.add('wrong');
+      }
+    }
+
+    // Update word list with found words
+    function updateWordList() {
+      const listItems = wordListElement.querySelectorAll('li');
+      listItems.forEach(li => {
+        if (foundWords.includes(li.textContent)) {
+          li.classList.add('found');
+        }
+      });
+    }
+
+    // Increment score when a word is found
+    function incrementScore() {
+      const score = foundWords.length;
+      document.getElementById('score').textContent = score;
+    }
+
+    // Reset the selection after finding a word
+    function resetSelection() {
+      selectedCells = [];
+      const cells = document.querySelectorAll('.cell');
+      cells.forEach(cell => {
+        if (cell.classList.contains('highlight')) {
+          cell.classList.remove('highlight');
+        }
+      });
+    }
+
+    // Start the timer
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          document.getElementById('time-left').textContent = timeLeft;
+        } else {
+          clearInterval(timerInterval);
+          endGame();
+        }
+      }, 1000);
+    }
+
+    // End the game
+    function endGame() {
+      document.getElementById('game-over').style.display = 'block';
+      document.getElementById('score').textContent = foundWords.length;
+      document.getElementById('total').textContent = words.length;
+      document.getElementById('grid').style.display = 'none';
+    }
+
+    // Retry the game
+    function retryGame() {
+      timeLeft = 60;
+      foundWords = [];
+      selectedCells = [];
+      document.getElementById('game-over').style.display = 'none';
+      document.getElementById('grid').style.display = 'block';
+      initializeGame();
+    }
+
+    // Initialize the game
+    function initializeGame() {
+      initializeGrid();
+      placeWords();
+      renderGrid();
+      renderWordList();
+    }
+
+    initializeGame();
+  </script>
+</body>
+</html>

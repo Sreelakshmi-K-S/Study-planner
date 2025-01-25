@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Matching Game</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42;
+      --secondary-color: #fcbf49;
+      --accent-color: #ff6361;
+      --background-color: #fff3e6;
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    #game-container {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+    .flashcard {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: var(--card-background);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      display: inline-block;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+    .score {
+      font-size: 1.5em;
+      color: var(--primary-color);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>Word Matching Game</h1>
+    <p>Click on the correct word for the image!</p>
+    <div id="flashcards"></div>
+    <p id="score" class="score">Score: 0</p>
+  </div>
+  <script>
+    const words = [
+      { image: '🍎', word: 'Apple' },
+      { image: '🍌', word: 'Banana' },
+      { image: '🐱', word: 'Cat' },
+      { image: '🐶', word: 'Dog' }
+    ];
+
+    let score = 0;
+    const flashcardsElement = document.getElementById('flashcards');
+    const scoreElement = document.getElementById('score');
+
+    function displayFlashcards() {
+      flashcardsElement.innerHTML = '';
+      words.forEach(word => {
+        const flashcard = document.createElement('div');
+        flashcard.classList.add('flashcard');
+        flashcard.textContent = word.word;
+        flashcard.onclick = () => checkAnswer(word);
+        flashcardsElement.appendChild(flashcard);
+      });
+    }
+
+    function checkAnswer(selectedWord) {
+      const selectedImage = prompt("What is the image for this word? (e.g., 🍎 for Apple)");
+      if (selectedImage === selectedWord.image) {
+        score++;
+        alert("Correct!");
+      } else {
+        alert("Wrong!");
+      }
+      scoreElement.textContent = "Score: " + score;
+    }
+
+    displayFlashcards();
+  </script>
+</body>
+</html>
