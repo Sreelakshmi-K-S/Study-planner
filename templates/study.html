@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Materials - Fun Study Planner for Kids</title>
+  <style>
+    :root {
+      --primary-color: #ff8c42; /* Bright orange */
+      --secondary-color: #fcbf49; /* Light orange */
+      --accent-color: #ff6361; /* Fun red */
+      --background-color: #fff3e6; /* Cream */
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-radius: 20px;
+      --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+      --font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #app {
+      max-width: 1000px;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 3em;
+      color: var(--primary-color);
+    }
+
+    .header .quote {
+      font-size: 1.2em;
+      color: var(--accent-color);
+      margin-top: 10px;
+    }
+
+    .study-materials-container {
+      background-color: var(--card-background);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .study-materials-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .category-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Dropdown Button Style */
+    .dropdown {
+      width: 100%;
+      background-color: var(--card-background);
+      padding: 15px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.3s;
+      font-size: 1.3em;
+    }
+
+    .dropdown:hover {
+      background-color: var(--accent-color);
+      color: #fff;
+    }
+
+    /* Dropdown Menu Style */
+    .dropdown-content {
+      display: none;
+      background-color: var(--card-background);
+      min-width: 200px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .dropdown-content a {
+      color: var(--text-color);
+      padding: 8px 10px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1em;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .back-button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1>Study Materials for Kids</h1>
+      <p class="quote">"Explore fun learning resources by subject!"</p>
+    </header>
+
+    <main class="study-materials-container">
+      <h2>Select a Subject to Explore Resources</h2>
+
+      <div class="category-container">
+        <div class="dropdown">
+          Math
+          <div class="dropdown-content">
+            <a href="#">Videos</a>
+            <a href="#">Notes</a>
+            <a href="#">Worksheets</a>
+            
+          </div>
+        </div>
+
+        <div class="dropdown">
+          Science
+          <div class="dropdown-content">
+            <a href="#">Videos</a>
+            <a href="#">Notes</a>
+            <a href="#">Projects</a>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          English
+          <div class="dropdown-content">
+            <a href="#">Spelling Games</a>
+            <a href="#">Reading Comprehension</a>
+            <a href="#">Grammar Exercises</a>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          Social Studies
+          <div class="dropdown-content">
+            <a href="#">Videos</a>
+            <a href="#">Notes</a>
+            <a href="#">Maps</a>
+          </div>
+        </div>
+      </div>
+
+      <a href="{{ url_for('dashboard') }}" class="back-button">Back to Dashboard</a>
+    </main>
+  </div>
+
+  <script>
+    document.querySelectorAll('.dropdown').forEach(function(dropdown) {
+      dropdown.addEventListener('click', function() {
+        const content = this.querySelector('.dropdown-content');
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+</body>
+</html>

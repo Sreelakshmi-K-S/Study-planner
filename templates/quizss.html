@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Science Quiz</title>
+  <title>Social Science Quiz</title>
   <style>
     :root {
       --primary-color: #ff8c42; /* Bright orange */
@@ -102,11 +102,48 @@
     .incorrect {
       color: var(--accent-color);
     }
+
+    .social-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .social-buttons a {
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 1.2em;
+      color: #fff;
+      background-color: #3b5998; /* Facebook color */
+      padding: 10px;
+      border-radius: var(--border-radius);
+      transition: background-color 0.3s;
+    }
+
+    .social-buttons a:hover {
+      background-color: #2d4373; /* Facebook dark color */
+    }
+
+    .social-buttons a.twitter {
+      background-color: #55acee; /* Twitter color */
+    }
+
+    .social-buttons a.twitter:hover {
+      background-color: #1da1f2; /* Twitter hover color */
+    }
+
+    .social-buttons a.linkedin {
+      background-color: #0077b5; /* LinkedIn color */
+    }
+
+    .social-buttons a.linkedin:hover {
+      background-color: #006097; /* LinkedIn hover color */
+    }
   </style>
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Science Quiz</h1>
+    <h1>Social Science Quiz</h1>
     <div id="quiz">
       <div id="question-container">
         <div class="question" id="question">Question text here</div>
@@ -123,21 +160,22 @@
       <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
       <!-- Return to Dashboard button -->
       <button class="btn" onclick="returnToDashboard()">Return to Dashboard</button>
+      
     </div>
   </div>
 
   <script>
     const allQuestions = [
-      { question: "What is the chemical symbol for water?", options: ["H2O", "O2", "CO2", "NaCl"], correct: "H2O" },
-      { question: "What planet is known as the Red Planet?", options: ["Earth", "Mars", "Jupiter", "Venus"], correct: "Mars" },
-      { question: "What gas do plants absorb from the atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"], correct: "Carbon Dioxide" },
-      { question: "What is the boiling point of water?", options: ["100°C", "90°C", "120°C", "80°C"], correct: "100°C" },
-      { question: "Which organ pumps blood in the human body?", options: ["Liver", "Heart", "Brain", "Kidneys"], correct: "Heart" },
-      { question: "What is the hardest natural substance?", options: ["Gold", "Iron", "Diamond", "Graphite"], correct: "Diamond" },
-      { question: "Which planet is closest to the sun?", options: ["Mercury", "Venus", "Earth", "Mars"], correct: "Mercury" },
-      { question: "What is the powerhouse of the cell?", options: ["Mitochondria", "Nucleus", "Ribosome", "Chloroplast"], correct: "Mitochondria" },
-      { question: "What do bees collect from flowers?", options: ["Nectar", "Water", "Pollen", "Sugar"], correct: "Nectar" },
-      { question: "What force keeps us on the ground?", options: ["Gravity", "Magnetism", "Friction", "Electricity"], correct: "Gravity" },
+      { question: "Who was the first President of the United States?", options: ["George Washington", "Thomas Jefferson", "Abraham Lincoln", "John Adams"], correct: "George Washington" },
+      { question: "Which civilization built the pyramids in Egypt?", options: ["Mesopotamians", "Ancient Egyptians", "Romans", "Maya"], correct: "Ancient Egyptians" },
+      { question: "What is the capital of France?", options: ["Berlin", "Madrid", "Paris", "Rome"], correct: "Paris" },
+      { question: "What is the longest river in the world?", options: ["Amazon", "Nile", "Yangtze", "Mississippi"], correct: "Nile" },
+      { question: "Which country was the birthplace of democracy?", options: ["Italy", "Greece", "Egypt", "India"], correct: "Greece" },
+      { question: "What year did World War II end?", options: ["1943", "1945", "1950", "1960"], correct: "1945" },
+      { question: "What is the largest ocean on Earth?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correct: "Pacific" },
+      { question: "Who wrote the play 'Romeo and Juliet'?", options: ["William Shakespeare", "Charles Dickens", "Homer", "Jane Austen"], correct: "William Shakespeare" },
+      { question: "Which empire was ruled by Julius Caesar?", options: ["Roman Empire", "Mongol Empire", "Ottoman Empire", "Mayan Empire"], correct: "Roman Empire" },
+      { question: "What is the main religion in India?", options: ["Christianity", "Islam", "Hinduism", "Buddhism"], correct: "Hinduism" }
     ];
 
     let questions = [];
@@ -252,9 +290,8 @@
       showQuestion();
     }
 
-    // Redirect to the dashboard
     function returnToDashboard() {
-      window.location.href = "dash3.html"; // Replace with your dashboard URL
+      window.location.href = "{{ url_for('dashboard') }}"; // Replace with actual dashboard URL
     }
 
     nextButton.addEventListener("click", nextQuestion);

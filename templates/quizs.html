@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>English Grammar Quiz</title>
+  <title>Science Quiz</title>
   <style>
     :root {
       --primary-color: #ff8c42; /* Bright orange */
@@ -106,7 +106,7 @@
 </head>
 <body>
   <div class="quiz-container">
-    <h1>English Grammar Quiz</h1>
+    <h1>Science Quiz</h1>
     <div id="quiz">
       <div id="question-container">
         <div class="question" id="question">Question text here</div>
@@ -128,16 +128,16 @@
 
   <script>
     const allQuestions = [
-      { question: "Choose the correct sentence.", options: ["She can sings well.", "She can sing well.", "She can singing well.", "She sing well."], correct: "She can sing well." },
-      { question: "Select the proper noun.", options: ["dog", "city", "London", "happiness"], correct: "London" },
-      { question: "What is the plural form of 'child'?", options: ["childs", "children", "childes", "childrens"], correct: "children" },
-      { question: "Choose the correct form: 'I ____ to the store yesterday.'", options: ["go", "goes", "going", "went"], correct: "went" },
-      { question: "Which word is an adjective?", options: ["beautiful", "quickly", "run", "happiness"], correct: "beautiful" },
-      { question: "Choose the correct sentence.", options: ["Him and I are going to the park.", "He and I are going to the park.", "I and him are going to the park.", "I and he are going to the park."], correct: "He and I are going to the park." },
-      { question: "Which of these is a synonym for 'happy'?", options: ["sad", "angry", "joyful", "sleepy"], correct: "joyful" },
-      { question: "What is the correct form of 'to be' in: 'She ____ a teacher.'", options: ["is", "are", "am", "were"], correct: "is" },
-      { question: "What is the past tense of 'eat'?", options: ["ate", "eats", "eating", "eated"], correct: "ate" },
-      { question: "Which of these sentences is correct?", options: ["Its raining outside.", "It's raining outside.", "Its' raining outside.", "It raining outside."], correct: "It's raining outside." }
+      { question: "What is the chemical symbol for water?", options: ["H2O", "O2", "CO2", "NaCl"], correct: "H2O" },
+      { question: "What planet is known as the Red Planet?", options: ["Earth", "Mars", "Jupiter", "Venus"], correct: "Mars" },
+      { question: "What gas do plants absorb from the atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"], correct: "Carbon Dioxide" },
+      { question: "What is the boiling point of water?", options: ["100°C", "90°C", "120°C", "80°C"], correct: "100°C" },
+      { question: "Which organ pumps blood in the human body?", options: ["Liver", "Heart", "Brain", "Kidneys"], correct: "Heart" },
+      { question: "What is the hardest natural substance?", options: ["Gold", "Iron", "Diamond", "Graphite"], correct: "Diamond" },
+      { question: "Which planet is closest to the sun?", options: ["Mercury", "Venus", "Earth", "Mars"], correct: "Mercury" },
+      { question: "What is the powerhouse of the cell?", options: ["Mitochondria", "Nucleus", "Ribosome", "Chloroplast"], correct: "Mitochondria" },
+      { question: "What do bees collect from flowers?", options: ["Nectar", "Water", "Pollen", "Sugar"], correct: "Nectar" },
+      { question: "What force keeps us on the ground?", options: ["Gravity", "Magnetism", "Friction", "Electricity"], correct: "Gravity" },
     ];
 
     let questions = [];
@@ -254,7 +254,7 @@
 
     // Redirect to the dashboard
     function returnToDashboard() {
-      window.location.href = "dash3.html"; // Replace with your dashboard URL
+      window.location.href = "{{ url_for('dashboard') }}"; // Replace with your dashboard URL
     }
 
     nextButton.addEventListener("click", nextQuestion);

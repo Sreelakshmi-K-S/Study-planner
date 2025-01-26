@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Math Quiz</title>
+  <title>English Grammar Quiz</title>
   <style>
     :root {
       --primary-color: #ff8c42; /* Bright orange */
@@ -102,48 +102,11 @@
     .incorrect {
       color: var(--accent-color);
     }
-
-    .social-buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .social-buttons a {
-      margin: 0 10px;
-      text-decoration: none;
-      font-size: 1.2em;
-      color: #fff;
-      background-color: #3b5998; /* Facebook color */
-      padding: 10px;
-      border-radius: var(--border-radius);
-      transition: background-color 0.3s;
-    }
-
-    .social-buttons a:hover {
-      background-color: #2d4373; /* Facebook dark color */
-    }
-
-    .social-buttons a.twitter {
-      background-color: #55acee; /* Twitter color */
-    }
-
-    .social-buttons a.twitter:hover {
-      background-color: #1da1f2; /* Twitter hover color */
-    }
-
-    .social-buttons a.linkedin {
-      background-color: #0077b5; /* LinkedIn color */
-    }
-
-    .social-buttons a.linkedin:hover {
-      background-color: #006097; /* LinkedIn hover color */
-    }
   </style>
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Math Quiz</h1>
+    <h1>English Grammar Quiz</h1>
     <div id="quiz">
       <div id="question-container">
         <div class="question" id="question">Question text here</div>
@@ -160,23 +123,21 @@
       <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
       <!-- Return to Dashboard button -->
       <button class="btn" onclick="returnToDashboard()">Return to Dashboard</button>
-      <!-- Social Media Share Buttons -->
-     
     </div>
   </div>
 
   <script>
     const allQuestions = [
-      { question: "What is 5 + 7?", options: ["10", "11", "12", "13"], correct: "12" },
-      { question: "What is the square root of 16?", options: ["2", "3", "4", "5"], correct: "4" },
-      { question: "What is 15 ÷ 3?", options: ["3", "4", "5", "6"], correct: "5" },
-      { question: "What is 8 × 7?", options: ["49", "56", "64", "72"], correct: "56" },
-      { question: "What is 9²?", options: ["81", "72", "64", "91"], correct: "81" },
-      { question: "What is 20% of 50?", options: ["5", "10", "15", "20"], correct: "10" },
-      { question: "What is the value of π (pi) to two decimal places?", options: ["3.12", "3.14", "3.16", "3.18"], correct: "3.14" },
-      { question: "What is 45 - 19?", options: ["25", "26", "27", "28"], correct: "26" },
-      { question: "What is 3 × 3 × 3?", options: ["9", "18", "27", "36"], correct: "27" },
-      { question: "What is 100 ÷ 5?", options: ["15", "20", "25", "30"], correct: "20" }
+      { question: "Choose the correct sentence.", options: ["She can sings well.", "She can sing well.", "She can singing well.", "She sing well."], correct: "She can sing well." },
+      { question: "Select the proper noun.", options: ["dog", "city", "London", "happiness"], correct: "London" },
+      { question: "What is the plural form of 'child'?", options: ["childs", "children", "childes", "childrens"], correct: "children" },
+      { question: "Choose the correct form: 'I ____ to the store yesterday.'", options: ["go", "goes", "going", "went"], correct: "went" },
+      { question: "Which word is an adjective?", options: ["beautiful", "quickly", "run", "happiness"], correct: "beautiful" },
+      { question: "Choose the correct sentence.", options: ["Him and I are going to the park.", "He and I are going to the park.", "I and him are going to the park.", "I and he are going to the park."], correct: "He and I are going to the park." },
+      { question: "Which of these is a synonym for 'happy'?", options: ["sad", "angry", "joyful", "sleepy"], correct: "joyful" },
+      { question: "What is the correct form of 'to be' in: 'She ____ a teacher.'", options: ["is", "are", "am", "were"], correct: "is" },
+      { question: "What is the past tense of 'eat'?", options: ["ate", "eats", "eating", "eated"], correct: "ate" },
+      { question: "Which of these sentences is correct?", options: ["Its raining outside.", "It's raining outside.", "Its' raining outside.", "It raining outside."], correct: "It's raining outside." }
     ];
 
     let questions = [];
@@ -291,8 +252,9 @@
       showQuestion();
     }
 
+    // Redirect to the dashboard
     function returnToDashboard() {
-      window.location.href = "dash3.html"; // Replace with actual dashboard URL
+      window.location.href = "{{ url_for('dashboard') }}"; // Replace with your dashboard URL
     }
 
     nextButton.addEventListener("click", nextQuestion);

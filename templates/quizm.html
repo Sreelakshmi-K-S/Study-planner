@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Science Quiz</title>
+  <title>Math Quiz</title>
   <style>
     :root {
       --primary-color: #ff8c42; /* Bright orange */
@@ -143,7 +143,7 @@
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Social Science Quiz</h1>
+    <h1>Math Quiz</h1>
     <div id="quiz">
       <div id="question-container">
         <div class="question" id="question">Question text here</div>
@@ -160,22 +160,23 @@
       <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
       <!-- Return to Dashboard button -->
       <button class="btn" onclick="returnToDashboard()">Return to Dashboard</button>
-      
+      <!-- Social Media Share Buttons -->
+     
     </div>
   </div>
 
   <script>
     const allQuestions = [
-      { question: "Who was the first President of the United States?", options: ["George Washington", "Thomas Jefferson", "Abraham Lincoln", "John Adams"], correct: "George Washington" },
-      { question: "Which civilization built the pyramids in Egypt?", options: ["Mesopotamians", "Ancient Egyptians", "Romans", "Maya"], correct: "Ancient Egyptians" },
-      { question: "What is the capital of France?", options: ["Berlin", "Madrid", "Paris", "Rome"], correct: "Paris" },
-      { question: "What is the longest river in the world?", options: ["Amazon", "Nile", "Yangtze", "Mississippi"], correct: "Nile" },
-      { question: "Which country was the birthplace of democracy?", options: ["Italy", "Greece", "Egypt", "India"], correct: "Greece" },
-      { question: "What year did World War II end?", options: ["1943", "1945", "1950", "1960"], correct: "1945" },
-      { question: "What is the largest ocean on Earth?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correct: "Pacific" },
-      { question: "Who wrote the play 'Romeo and Juliet'?", options: ["William Shakespeare", "Charles Dickens", "Homer", "Jane Austen"], correct: "William Shakespeare" },
-      { question: "Which empire was ruled by Julius Caesar?", options: ["Roman Empire", "Mongol Empire", "Ottoman Empire", "Mayan Empire"], correct: "Roman Empire" },
-      { question: "What is the main religion in India?", options: ["Christianity", "Islam", "Hinduism", "Buddhism"], correct: "Hinduism" }
+      { question: "What is 5 + 7?", options: ["10", "11", "12", "13"], correct: "12" },
+      { question: "What is the square root of 16?", options: ["2", "3", "4", "5"], correct: "4" },
+      { question: "What is 15 ÷ 3?", options: ["3", "4", "5", "6"], correct: "5" },
+      { question: "What is 8 × 7?", options: ["49", "56", "64", "72"], correct: "56" },
+      { question: "What is 9²?", options: ["81", "72", "64", "91"], correct: "81" },
+      { question: "What is 20% of 50?", options: ["5", "10", "15", "20"], correct: "10" },
+      { question: "What is the value of π (pi) to two decimal places?", options: ["3.12", "3.14", "3.16", "3.18"], correct: "3.14" },
+      { question: "What is 45 - 19?", options: ["25", "26", "27", "28"], correct: "26" },
+      { question: "What is 3 × 3 × 3?", options: ["9", "18", "27", "36"], correct: "27" },
+      { question: "What is 100 ÷ 5?", options: ["15", "20", "25", "30"], correct: "20" }
     ];
 
     let questions = [];
@@ -291,7 +292,7 @@
     }
 
     function returnToDashboard() {
-      window.location.href = "dash3.html"; // Replace with actual dashboard URL
+      window.location.href = "{{ url_for('dashboard') }}"; // Replace with actual dashboard URL
     }
 
     nextButton.addEventListener("click", nextQuestion);

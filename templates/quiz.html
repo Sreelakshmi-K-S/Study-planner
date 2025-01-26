@@ -204,26 +204,32 @@
         </div>
       </div>
 
-      <a href="dash3.html" class="back-button">Back to Dashboard</a>
+      <a href="{{ url_for('dashboard') }}" class="back-button">Back to Dashboard</a>
     </main>
   </div>
 
   <script>
+    const scienceQuizUrl = "{{ url_for('quiz_science') }}"; 
+    const mathQuizUrl = "{{ url_for('quiz_math') }}"; 
+    const socialStudiesQuizUrl = "{{ url_for('quiz_social_studies') }}"; 
+    const englishQuizUrl = "{{ url_for('quiz_english') }}"; 
+  
     function startQuiz(category) {
       alert(`Starting the ${category} Quiz!`);
       if (category === 'Science') {
-      window.location.href = 'quizs.html'; /
-    }
-    if (category === 'Maths') {
-      window.location.href = 'quizm.html'; /
-    }
-    if (category === 'Social') {
-      window.location.href = 'quizss.html'; /
-    }
-    if (category === 'English') {
-      window.location.href = 'quize.html'; /
-    }
+        window.location.href = scienceQuizUrl; 
+      }
+      if (category === 'Math') {
+        window.location.href = mathQuizUrl; 
+      }
+      if (category === 'Social Studies') {
+        window.location.href = socialStudiesQuizUrl; 
+      }
+      if (category === 'English') {
+        window.location.href = englishQuizUrl; 
+      }
     }
   </script>
+ 
 </body>
 </html>

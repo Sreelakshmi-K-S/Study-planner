@@ -174,7 +174,11 @@
         </div>
 
         <button class="save-button" onclick="saveChanges()">Save Changes</button>
-        <button class="back-button" onclick="window.location.href='dash3.html'">Back to Dashboard</button>
+        <button class="back-button" onclick="window.location.href='{{ url_for('dashboard') }}'">Back to Dashboard</button>
+
+        <!--<button class="back-button" onclick="window.location.href='{{ url_for('dashboard')}}'">Back to Dashboard</button>-->
+
+      <!--<button class="back-button" onclick="window.location.href="{{ url_for('dashboard') }}"></button>Back to Dashboard</button>-->
       </div>
     </main>
   </div>

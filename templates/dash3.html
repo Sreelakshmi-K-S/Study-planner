@@ -210,17 +210,17 @@
           <p><strong>Quizzes Taken:</strong> <span id="quizzes-taken">5</span></p>
         </div>
       </section>
-
+    
       <nav class="navigation">
         <h2>Navigation</h2>
         <ul>
-          <li><a href="time.html" class="nav-link">Timetable</a></li>
-          <li><a href="todo.html" class="nav-link">To-Do List</a></li>
-          <li><a href="quiz.html" class="nav-link">Quiz</a></li>
-          <li><a href="game1.html" class="nav-link">Math Ninja Attack</a></li>
-          <li><a href="study.html" class="nav-link">Study materials</a></li>
-          <li><a href="progress.html" class="nav-link">Progress</a></li>
-          <li><a href="settings.html" class="nav-link">Settings</a></li>
+          <li><a href="{{ url_for('timetable') }}" class="nav-link">Timetable</a></li> 
+          <li><a href="{{ url_for('todo') }}" class="nav-link">To-Do List</a></li>
+          <li><a href="{{ url_for('quiz') }}" class="nav-link">Quiz</a></li>
+          <li><a href="{{ url_for('game') }}" class="nav-link">Math Ninja Attack</a></li> 
+          <li><a href="{{ url_for('study_materials') }}" class="nav-link">Study materials</a></li>
+          <li><a href="{{ url_for('progress') }}" class="nav-link">Progress</a></li>
+          <li><a href="{{ url_for('settings') }}" class="nav-link">Settings</a></li>
         </ul>
       </nav>
 
