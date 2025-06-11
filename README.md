@@ -37,7 +37,7 @@ Screenshot 2025-01-26 081756
 Screenshot 2025-01-25 210713 
 Screenshot 2025-01-25 210839
 
-project link- https://github.com/JyotsnaMenon/Study-planner.git
+project link- https://github.com/Sreelakshmi-K-S/Study-planner.git
 video file-http://bit.ly/42nUEWe
 
 username -jyotsna 
